@@ -1,0 +1,26 @@
+trigger:
+- none
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: NodeTool@0
+  inputs:
+    versionSpec: '10.x'
+  displayName: 'Install Node.js'
+
+- script: |
+    npm install
+    npm init react-app my-app
+    npm run build
+  displayName: 'npm install and build'
+
+- task: CopyFiles@2
+  inputs:
+    Contents: '**' ## update to match what you want to copy
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+
+- script: echo $(Build.StagingDirectory)
+- powershell: dir
+#- powershell: Get-ChildItem -Path public -Recurse -Force
