@@ -23,4 +23,4 @@ steps:
 
 - script: echo $(Build.StagingDirectory)
 - powershell: dir
-#- powershell: Get-ChildItem -Path public -Recurse -Force
+- powershell: Get-ChildItem -Path build -Recurse -Force
