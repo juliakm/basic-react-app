@@ -19,8 +19,15 @@ steps:
 - task: CopyFiles@2
   inputs:
     Contents: '**' ## update to match what you want to copy
-    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)/build'
 
 - script: echo $(Build.StagingDirectory)
 - powershell: dir
 - powershell: Get-ChildItem -Path build -Recurse -Force
+
+- task: PublishBuildArtifacts@1
+  inputs: 
+    pathtoPublish: '$(Build.ArtifactStagingDirectory)/build' # dist or build files
+
+
+
