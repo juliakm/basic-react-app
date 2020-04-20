@@ -21,9 +21,9 @@ steps:
     Contents: 'build/**' ## update to match what you want to copy
     TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
-- script: echo $(Build.StagingDirectory)
-- powershell: dir
-- powershell: Get-ChildItem -Path build -Recurse -Force
+- script: echo $(Build.StagingDirectory) ## output staging directory
+- powershell: dir ## output contents of root directory
+- powershell: Get-ChildItem -Path build -Recurse -Force ## verify there are contents in build
 
 - task: PublishBuildArtifacts@1
   inputs: 
