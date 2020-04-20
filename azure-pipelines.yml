@@ -18,8 +18,8 @@ steps:
 
 - task: CopyFiles@2
   inputs:
-    Contents: '**' ## update to match what you want to copy
-    TargetFolder: '$(Build.ArtifactStagingDirectory)/build'
+    Contents: 'build' ## update to match what you want to copy
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
 - script: echo $(Build.StagingDirectory)
 - powershell: dir
@@ -27,7 +27,8 @@ steps:
 
 - task: PublishBuildArtifacts@1
   inputs: 
-    pathtoPublish: '$(Build.ArtifactStagingDirectory)/build' # dist or build files
+    pathtoPublish: '$(Build.ArtifactStagingDirectory)' # dist or build files
+    ArtifactName: 'www'
 
 
 
