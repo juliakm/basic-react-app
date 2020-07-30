@@ -30,9 +30,10 @@ steps:
     pathtoPublish: '$(Build.ArtifactStagingDirectory)' # dist or build files
     ArtifactName: 'www'
 
+
 - task: AzureWebApp@1
   inputs:
     azureSubscription: 'retro-demo'
     appType: 'webAppLinux'
     appName: 'pipelinesApp'
-    package: '$(System.DefaultWorkingDirectory)/**/*.zip'
+    package: '$(System.DefaultWorkingDirectory)/**/www'
