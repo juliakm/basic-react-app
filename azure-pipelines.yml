@@ -36,4 +36,4 @@ steps:
     azureSubscription: 'retro-demo'
     appType: 'webAppLinux'
     appName: 'pipelinesApp'
-    package: '$(System.DefaultWorkingDirectory)/**/www'
+    package: '$(System.DefaultWorkingDirectory)/**/**/www'
