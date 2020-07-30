@@ -10,9 +10,10 @@ steps:
     versionSpec: '10.x'
   displayName: 'Install Node.js'
 
+# npm init react-app my-app
+
 - script: |
     npm install
-    npm init react-app my-app
     npm run build
   displayName: 'npm install and build'
 
