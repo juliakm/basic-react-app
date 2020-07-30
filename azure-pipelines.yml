@@ -30,10 +30,9 @@ steps:
     pathtoPublish: '$(Build.ArtifactStagingDirectory)' # dist or build files
     ArtifactName: 'www'
 
-- task: AzureRmWebAppDeployment@4
+- task: AzureWebApp@1
   inputs:
-    ConnectionType: 'AzureRM'
     azureSubscription: 'retro-demo'
     appType: 'webAppLinux'
-    WebAppName: 'pipelinesApp'
-    packageForLinux: '$(System.DefaultWorkingDirectory)/**/wwww/*.zip'
+    appName: 'pipelinesApp'
+    package: '$(System.DefaultWorkingDirectory)/**/*.zip'
