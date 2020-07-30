@@ -16,19 +16,19 @@ steps:
     npm run build
   displayName: 'npm install and build'
 
-- task: CopyFiles@2
-  inputs:
-    Contents: 'build/**' ## update to match what you want to copy
-    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+# - task: CopyFiles@2
+#   inputs:
+#     Contents: 'build/**' ## update to match what you want to copy
+#     TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
 # - script: echo $(Build.StagingDirectory) ## output staging directory
 # - powershell: dir ## output contents of root directory
 # - powershell: Get-ChildItem -Path build -Recurse -Force ## verify there are contents in build
 
-- task: PublishBuildArtifacts@1
-  inputs: 
-    pathtoPublish: '$(Build.ArtifactStagingDirectory)' # dist or build files
-    ArtifactName: 'www'
+# - task: PublishBuildArtifacts@1
+#   inputs: 
+#     pathtoPublish: '$(Build.ArtifactStagingDirectory)' # dist or build files
+#     ArtifactName: 'www'
 
 
 - task: AzureWebApp@1
@@ -36,4 +36,5 @@ steps:
     azureSubscription: 'retro-demo'
     appType: 'webAppLinux'
     appName: 'pipelinesApp'
-    package: '$(System.DefaultWorkingDirectory)/build/**'
+    package: '$(System.DefaultWorkingDirectory)'
+    customWebConfig: '-Handler iisnode -NodeStartFile server.js -appType node'
