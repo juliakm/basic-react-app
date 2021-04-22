@@ -1,41 +1,34 @@
-trigger:
-- none
+stages:
+- stage: StageA
+  jobs:
+  - deployment: A1
+    pool:
+      vmImage: 'ubuntu-16.04'
+    environment: env1
+    strategy:                  
+      runOnce:
+        deploy:
+          steps:
+          - bash: echo "##vso[task.setvariable variable=RunStageB;isOutput=true]true"
+            name: setvarStep
+          - bash: echo $(System.JobName)
 
-pool:
-  vmImage: 'ubuntu-latest'
-
-steps:
-- task: NodeTool@0
-  inputs:
-    versionSpec: '10.x'
-  displayName: 'Install Node.js'
-
-# npm init react-app my-app
-
-- script: |
-    npm install
-    npm run build
-  displayName: 'npm install and build'
-
-# - task: CopyFiles@2
-#   inputs:
-#     Contents: 'build/**' ## update to match what you want to copy
-#     TargetFolder: '$(Build.ArtifactStagingDirectory)'
-
-# - script: echo $(Build.StagingDirectory) ## output staging directory
-# - powershell: dir ## output contents of root directory
-# - powershell: Get-ChildItem -Path build -Recurse -Force ## verify there are contents in build
-
-# - task: PublishBuildArtifacts@1
-#   inputs: 
-#     pathtoPublish: '$(Build.ArtifactStagingDirectory)' # dist or build files
-#     ArtifactName: 'www'
-
-
-- task: AzureWebApp@1
-  inputs:
-    azureSubscription: 'retro-demo'
-    appType: 'webAppLinux'
-    appName: 'pipelinesApp'
-    package: '$(System.DefaultWorkingDirectory)'
-    customWebConfig: '-Handler iisnode -NodeStartFile server.js -appType node'
+- stage: StageB
+  dependsOn: 
+    - StageA
+ 
+  # when referring to another stage, stage name is included in variable path
+  condition: eq(dependencies.StageA.outputs['A1.setvarStep.RunStageB'], 'true') # <---- modified
+  
+  # Variables reference syntax differs slightly from inter-stage condition syntax
+  variables:
+    myOutputVar: $[stageDependencies.StageA.A1.outputs['setvarStep.RunStageB']] # <---- modified
+  jobs:
+  - deployment: B1
+    pool:
+      vmImage: 'ubuntu-16.04'
+    strategy:                  
+      runOnce:
+        deploy:
+          steps:
+          - bash: echo $(myOutputVar)
