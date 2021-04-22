@@ -20,6 +20,9 @@ stages:
   variables:
     myOutputVar: $[stageDependencies.StageA.outputs['A1.setvarStep.RunStageB']]
     myOutputVarTwo: $[dependencies.StageA.outputs['A1.setvarStep.RunStageB']]
+    myOutputVarThree: $[stageDependencies.StageA.outputs['setvarStep.RunStageB']]
+    myOutputVarFour: $[dependencies.StageA.outputs['setvarStep.RunStageB']]
+
 
   jobs:
   - deployment: B1
@@ -32,3 +35,5 @@ stages:
           steps:
           - bash: echo $(myOutputVar)
           - bash: echo $(myOutputVarTwo)
+          - bash: echo $(myOutputVarThree)
+          - bash: echo $(myOutputVarFour)
