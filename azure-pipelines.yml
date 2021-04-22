@@ -12,15 +12,15 @@ stages:
           - bash: echo "##vso[task.setvariable variable=RunStageB;isOutput=true]true"
             name: setvarStep
           - bash: echo $(System.JobName)
+          - bash: echo "##vso[task.setvariable variable=shouldrun;isOutput=true]true"
+
 
 - stage: StageB
   dependsOn: 
     - StageA
-  # when referring to another stage, stage name is included in variable path
-  condition: eq(dependencies.StageA.outputs['setvarStep.RunStageB'], 'true')
-  # Variables reference syntax differs slightly from inter-stage condition syntax
+  condition: eq(stageDependencies.StageA.outputs['A1.setvarStep.RunStageB'], 'true')
   variables:
-    myOutputVar: $[stageDependencies.StageA.A1.outputs['setvarStep.RunStageB']]
+    myOutputVar: $[stageDependencies.StageA.outputs['A1.setvarStep.RunStageB']]
   jobs:
   - deployment: B1
     environment: env1
