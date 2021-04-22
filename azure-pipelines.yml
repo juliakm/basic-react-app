@@ -23,6 +23,7 @@ stages:
     myOutputVar: $[stageDependencies.StageA.A1.outputs['setvarStep.RunStageB']]
   jobs:
   - deployment: B1
+    environment: env1
     pool:
       vmImage: 'ubuntu-16.04'
     strategy:                  
