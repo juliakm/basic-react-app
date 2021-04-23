@@ -31,8 +31,8 @@ stages:
       name: echovar
 
 - stage: StageB
-  dependsOn: StageA
-  condition: eq(dependencies.StageA.outputs['StageA.A1.setrunStep.RunStageB'], 'true')
+  # dependsOn: StageA
+  # condition: eq(dependencies.StageA.outputs['StageA.A1.setrunStep.RunStageB'], 'true')
 
   jobs:
   # Set an output variable in a lifecycle hook of a deployment job executing runOnce strategy.
@@ -46,10 +46,9 @@ stages:
     strategy:                  
       runOnce:
         deploy:
-          steps:
+          steps:      
           - bash: echo $(myVarFromDeploymentStage) #outputs this is the deployment variable value
             name: echovartrytwo
           - bash: echo $(myBoolVarFromDeploymentStage) # outputs true
             name: echovartrybool 
-
-
+          - bash: echo 'env | sort'
