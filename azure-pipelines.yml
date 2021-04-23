@@ -25,3 +25,21 @@ stages:
     steps:
     - script: "echo $(myVarFromDeploymentJob)"
       name: echovar
+
+- stage: StageB
+  jobs:
+  # Set an output variable in a lifecycle hook of a deployment job executing runOnce strategy.
+  - deployment: C
+    pool:
+      vmImage: 'ubuntu-16.04'
+    environment: staging
+    variables:
+      myVarFromDeploymentStage: $[ stageDependencies.StageA.A.outputs['A.setvarStep.myOutputVar'] ]
+    strategy:                  
+      runOnce:
+        deploy:
+          steps:
+          - bash: echo $(myVarFromDeploymentStage)
+            name: echovartrytwo
+
+
