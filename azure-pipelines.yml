@@ -32,7 +32,7 @@ stages:
 
 - stage: StageB
   dependsOn: StageA
-  condition: eq(dependencies.StageA.A.outputs['A.setrunStep.RunStageB'], 'true')
+  condition: eq(dependencies.StageA.A.outputs['setrunStep.RunStageB'], 'true')
 
   jobs:
   # Set an output variable in a lifecycle hook of a deployment job executing runOnce strategy.
