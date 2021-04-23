@@ -51,4 +51,10 @@ stages:
             name: echovartrytwo
           - bash: echo $(myBoolVarFromDeploymentStage) # outputs true
             name: echovartrybool 
-          - bash: echo 'env | sort'
+          - task: Bash@3
+            inputs:
+              targetType: 'inline'
+              script: |
+                # Write your commands here
+                
+                env | sort
