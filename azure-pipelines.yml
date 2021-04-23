@@ -50,6 +50,6 @@ stages:
           - bash: echo $(myVarFromDeploymentStage) #outputs this is the deployment variable value
             name: echovartrytwo
           - bash: echo $(myBoolVarFromDeploymentStage) #true
-            name: echovartrytwo
+            name: echovartrybool
 
 
